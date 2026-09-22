@@ -304,12 +304,62 @@ if submitted:
     <style>
         * {{ box-sizing: border-box; }}
         body {{
-            margin: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #f8fafc;
-            color: #0f172a;
-            padding: 20px;
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    padding: 20px;
+}}
+
+/* ---- System theme adaptation ---- */
+@media (prefers-color-scheme: dark) {{
+        body {{
+            background: #0f172a;
+            color: #e2e8f0;
         }}
+        .title {{ color: #f1f5f9; }}
+        .subtitle {{ color: #94a3b8; }}
+        .status {{ color: #cbd5e1; }}
+
+        .layer-card {{
+            background: #1e293b;
+            border-color: #334155;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }}
+        .layer-sub {{ color: #94a3b8; }}
+        .layer-body {{ color: #e2e8f0; }}
+
+        .connector-line {{
+            background: repeating-linear-gradient(90deg, #64748b 0 6px, transparent 6px 11px);
+        }}
+        .connector-line::after {{ border-left-color: #94a3b8; }}
+        .connector-label {{ color: #cbd5e1; }}
+
+        .feat-chip {{ border-bottom-color: #334155; }}
+        .feat-name {{ color: #cbd5e1; }}
+        .feat-val {{ color: #f1f5f9; }}
+
+        .tree-icon {{ color: #cbd5e1; }}
+        .tree-remaining {{ color: #94a3b8; }}
+        .hparams {{
+            color: #94a3b8;
+            border-top-color: #334155;
+        }}
+
+        .formula {{
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }}
+        .value-label {{ color: #94a3b8; }}
+
+        .prob-bar-track {{ background: #334155; }}
+        .threshold-note {{ color: #94a3b8; }}
+
+        .sim-btn {{ background: #e2e8f0; color: #0f172a; }}
+        .sim-btn:hover {{ background: #cbd5e1; }}
+        .sim-btn:disabled {{ background: #475569; color: #94a3b8; }}
+    }}
         .title {{
             font-size: 19px;
             font-weight: 700;
@@ -538,6 +588,7 @@ if submitted:
             opacity: 0;
             transform: scale(0.8);
             transition: all 0.4s ease;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
         }}
         .class-badge.show {{
             opacity: 1;
