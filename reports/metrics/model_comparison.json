@@ -1,0 +1,25 @@
+{
+  "logistic_regression": {
+    "roc_auc": 0.8560619521440417,
+    "pr_auc": 0.41706774222103643,
+    "best_params": {
+      "model__C": 0.001,
+      "model__penalty": "l2",
+      "model__solver": "liblinear"
+    },
+    "cv_roc_auc": 0.8689852905471206
+  },
+  "xgboost": {
+    "roc_auc": 0.8814706230751007,
+    "pr_auc": 0.4828563278599914,
+    "best_params": {
+      "model__subsample": 0.8,
+      "model__n_estimators": 100,
+      "model__min_child_weight": 5,
+      "model__max_depth": 3,
+      "model__learning_rate": 0.05,
+      "model__colsample_bytree": 0.9
+    },
+    "cv_roc_auc": 0.8854969211742347
+  }
+}
