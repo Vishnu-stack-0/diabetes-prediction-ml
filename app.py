@@ -21,7 +21,7 @@ model = pipeline.named_steps["model"]
 st.title("Diabetes Risk Prediction")
 st.caption("Enter patient details to estimate diabetes risk. Hover the ⓘ on any field for the normal range.")
 
-with st.expander("📋 What do these numbers mean? (typical healthy ranges)"):
+with st.expander("📋 What do these numbers mean? "):
     st.markdown("""
 | Field | Normal range (roughly) | Notes |
 |---|---|---|
@@ -153,7 +153,7 @@ if submitted:
         st.warning("Values outside the normal range:\n\n" + "\n".join(f"- {f}" for f in flags))
 
     st.divider()
-    st.subheader("Why this prediction? (SHAP explanation)")
+    st.subheader("Why this prediction?")
     st.caption("Each bar shows how much that specific value pushed the prediction up (red, toward higher risk) or down (blue, toward lower risk).")
 
     input_transformed = preproc.transform(input_df)
@@ -161,11 +161,25 @@ if submitted:
         input_transformed = input_transformed.toarray()
     feature_names = preproc.get_feature_names_out()
 
-    explainer = shap.Explainer(model, feature_names=feature_names)
-    shap_values = explainer(input_transformed)
+    explainer = shap.TreeExplainer(
+        model,
+        feature_perturbation="tree_path_dependent",
+    )
+    shap_values = explainer.shap_values(input_transformed)
 
-    fig = plt.figure()
-    shap.plots.waterfall(shap_values[0], show=False)
-    st.pyplot(fig)
+    base_value = (
+        explainer.expected_value
+        if np.isscalar(explainer.expected_value)
+        else explainer.expected_value[1]
+    )
+    sample_explanation = shap.Explanation(
+        values=shap_values[0],
+        base_values=base_value,
+        data=input_transformed[0],
+        feature_names=feature_names,
+    )
+
+    shap.plots.waterfall(sample_explanation, show=False)
+    st.pyplot(plt.gcf())
     
     
